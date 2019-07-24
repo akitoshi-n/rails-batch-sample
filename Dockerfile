@@ -4,6 +4,7 @@ RUN apt-get update -qq && apt-get install -y \
     build-essential \
     libpq-dev \
     nodejs \
+    vim \
     cron
 
 ENV APP_ROOT /rails-batch-sample
