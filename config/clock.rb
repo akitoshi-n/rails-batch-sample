@@ -4,7 +4,7 @@ require File.expand_path('../environment', __FILE__)
 
 module Clockwork
   configure do |config|
-    config[:tz] = 'JST'
+    config[:tz] = 'Asia/Tokyo'
   end
 
   error_handler do |error|
