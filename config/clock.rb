@@ -7,5 +7,7 @@ module Clockwork
     puts "Runnning #{job}"
   end
 
-  every(1.minute, "sample 1 minute")
+  every(1.minute, "sample 1 minute") {
+    `rake task_sample:sample`
+  }
 end
