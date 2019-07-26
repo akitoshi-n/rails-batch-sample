@@ -31,7 +31,8 @@ LambdaからHeroku上のジョブを実行する。
 
 ### heorku scheduler
 ジョブを作成したら、HerokuのGUIから設定が可能。一番簡単な方法。
-しかし、必ずしも実行される保証はない。
+細かい指定ができないのと、必ずしも実行される保証はないのがネック。
 
 ### custom clock process
 (clockwork)[https://github.com/Rykian/clockwork/]というgemを使う方法。
+dynoを定期実行用として１つ使用して実行させる。
