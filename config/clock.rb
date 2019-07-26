@@ -15,5 +15,5 @@ module Clockwork
     puts "Runnning #{job}"
   end
 
-  every(1.day, "sample notification", :at => '17:10') { SampleJob.perform_later }
+  every(1.minute, "sample notification") { SampleJob.perform_later }
 end
