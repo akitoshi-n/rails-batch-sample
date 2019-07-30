@@ -7,13 +7,13 @@ module Clockwork
     config[:tz] = 'Asia/Tokyo'
   end
 
-  error_handler do |error|
-    Rails.logger.error("occur error")
+  error_handler do |e|
+    Rails.logger.error e.class
+    Rails.logger.error e.message
+    Rails.logger.error e.backtrace.join("\n")
+    notifier = Slack::Notifier.new ENV['SLACK_WEBHOOK_URL']
+    notifier.ping("[Clockwork] #{e.message}")
   end
 
-  handler do |job|
-    puts "Runnning #{job}"
-  end
-
-  every(1.minute, "sample notification") { SampleJob.perform_later }
+  every(1.day, "sample notification", at: '12:00') { SampleJob.perform_later }
 end

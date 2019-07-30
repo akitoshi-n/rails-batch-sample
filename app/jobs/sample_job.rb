@@ -4,6 +4,6 @@ class SampleJob < ApplicationJob
   def perform(*args)
     puts "The number of users is #{User.count} people!"
     notifier = Slack::Notifier.new ENV['SLACK_WEBHOOK_URL']
-    notifier.ping("1分にお知らせを送るよー！")
+    notifier.ping("毎日12:00にお知らせを送るよー！")
   end
 end
