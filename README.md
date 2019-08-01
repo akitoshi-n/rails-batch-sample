@@ -1,8 +1,9 @@
 # rails-batch-sample
-railsのバッチ処理のサンプル
+Investigation of batch processing infrastructure on Heroku
 
-## Precondition
+## Restriction
 - Deploy to Heroku
+- Use [delayed_job](https://github.com/collectiveidea/delayed_job) for queue system
 
 ## Setup for local
 1. Install docker
@@ -18,21 +19,19 @@ $ docker-compose exec web bash
 xxx:/# /etc/init.d/cron start
 ```
 
-## Notice
-Heroku doesn't support linux cron.
+## Methods
+### Crontab
+The most common method. There is also a gem [whenenver](https://github.com/javan/whenever) that can easily handle crontab. But Heroku doesn't support linux cron.
 
-## methods
-### crontab
-もっとも一般的な方法。cronを簡単に扱えるように`whenever`というgemがある。しかし、Herokuでは使えない。
+### AWS Lambda
+Run a job on Heroku from Lambda. But operation is difficult.
 
-### lambda
-LambdaからHeroku上のジョブを実行する。
-運用が大変。
+### Heroku scheduler
+Once you create a job, you can configure it from the Heroku GUI. The easiest method. However the problem is that you can not specify details, and there is no guarantee that it will be executed.
 
-### heorku scheduler
-ジョブを作成したら、HerokuのGUIから設定が可能。一番簡単な方法。
-細かい指定ができないのと、必ずしも実行される保証はないのがネック。
+### Custom clock process
+Use a gem [clockwork](https://github.com/Rykian/clockwork/).
+This is a method of setting up one server for periodic execution.
 
-### custom clock process
-(clockwork)[https://github.com/Rykian/clockwork/]というgemを使う方法。
-dynoを定期実行用として１つ使用して実行させる。
+## Conclusion
+I decided to use custom clock process because it is recommended by Heroku, easy to schedule, and stable compared to Heroku scheduler. But If I could use [sidekiq](https://github.com/mperham/sidekiq) for queue system, I would select [simple scheduler](https://github.com/simplymadeapps/simple_scheduler) with Heroku scheduler.
